@@ -8,9 +8,13 @@ console.log('args:', args, 'Length:', args.length);
 
 // find how many arguments (length)
 // Edge Case: We need at least 2 arguments
+// if (args[1] === undefined) {
 
-// Edge Case: Is it a whole number?
-// Edge Case: If any argument is not a number, output an error message.
+if (args.length < 2) {
+  console.log('Please, enter at least 2 arguments');
+  process.exit();
+}
+
 // need a accumulator to store the total
 let total = 0;
 
@@ -19,9 +23,28 @@ let total = 0;
 // what should drive our decision? Do we need the index? => code readability?
 for (let arg of args) {
   // sum up the args (nbs)
-  total += Number(arg);
-  console.log('arg:', arg, 'total:', total, "type:", typeof Number(arg));
+  // Edge Case: Is it a whole number? If not => skip it
+  // check if it contains a decimal
+  const convertedNum = Number(arg);
+  console.log(
+    'arg:',
+    arg,
+    'convertedNum',
+    convertedNum,
+    'type:',
+    isNaN(convertedNum)
+  );
+  if (Number.isInteger(convertedNum)) {
+    total += convertedNum;
+  }
+  // Edge Case: If any argument is not a number, output an error message.
+  if (isNaN(convertedNum)) {
+    console.log('Please, enter only numbers');
+    // return => return a value from a function, return exits a function (side effect)
+    process.exit();
+  }
+  // console.log('arg:', arg, 'total:', total, 'type:', typeof convertedNum);
 }
 
 // print the result
-console.log("total:", total);
+console.log('total:', total);
